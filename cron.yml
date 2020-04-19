@@ -1,0 +1,9 @@
+- name: Creating Cron job
+  hosts: all
+  tasks:
+   - name: Creating hourly Cron job
+     cron:
+      name: output
+      minute: '0'
+      hour: '1'
+      job: 'date > /var/log/time.log' 
