@@ -1,0 +1,44 @@
+---
+- name: install WebApp
+  hosts: vbox
+
+  tasks:
+    - name: install python
+      dnf:
+        name: python3
+        state: latest
+      become: yes
+
+    - name: install epel
+      dnf:
+        name: epel-release
+        state: latest
+      become: yes
+
+    - name: install pip3
+      dnf:
+        name: python3-pip
+        state: latest
+      become: yes
+
+    - name: Install flask
+      raw: pip3 install flask flask-mysql
+      become: yes
+
+    - name: Download Mysql on Centos
+      get_url:
+        url: http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+        dest: .
+      become: yes
+
+    - name: install mysql-server
+      dnf:
+        name: mysql-server
+        state: latest
+      become: yes
+
+    - name: Start Mysql Sevice
+      raw: systemctl start mysqld.service
+      become: yes
+      tags:
+        - star
